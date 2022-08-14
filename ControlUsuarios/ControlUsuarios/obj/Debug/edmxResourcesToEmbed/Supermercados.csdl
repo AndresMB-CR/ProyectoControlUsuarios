@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FRESHModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="CANTON">
+    <Key>
+      <PropertyRef Name="ID_CANTON" />
+    </Key>
+    <Property Name="ID_CANTON" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOMBRE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DIRECCION" Relationship="Self.FK__DIRECCION__ID_CA__59FA5E80" FromRole="CANTON" ToRole="DIRECCION" />
+  </EntityType>
+  <EntityType Name="DETALLE_FACTURA">
+    <Key>
+      <PropertyRef Name="ID_DETALLE_FACTURA" />
+    </Key>
+    <Property Name="ID_DETALLE_FACTURA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CANTIDAD" Type="Int32" />
+    <Property Name="ID_PRODUCTO" Type="Int32" />
+    <Property Name="ID_FACTURA" Type="Int32" />
+    <NavigationProperty Name="FACTURA" Relationship="Self.FK__DETALLE_F__ID_FA__4F7CD00D" FromRole="DETALLE_FACTURA" ToRole="FACTURA" />
+    <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__DETALLE_F__ID_PR__4E88ABD4" FromRole="DETALLE_FACTURA" ToRole="PRODUCTO" />
+  </EntityType>
+  <EntityType Name="DIRECCION">
+    <Key>
+      <PropertyRef Name="ID_DIRECCION" />
+    </Key>
+    <Property Name="ID_DIRECCION" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_USUARIO" Type="Int32" />
+    <Property Name="ID_PROVINCIA" Type="Int32" />
+    <Property Name="ID_CANTON" Type="Int32" />
+    <Property Name="ID_DISTRITO" Type="Int32" />
+    <NavigationProperty Name="CANTON" Relationship="Self.FK__DIRECCION__ID_CA__59FA5E80" FromRole="DIRECCION" ToRole="CANTON" />
+    <NavigationProperty Name="DISTRITO" Relationship="Self.FK__DIRECCION__ID_DI__5AEE82B9" FromRole="DIRECCION" ToRole="DISTRITO" />
+    <NavigationProperty Name="PROVINCIA" Relationship="Self.FK__DIRECCION__ID_PR__59063A47" FromRole="DIRECCION" ToRole="PROVINCIA" />
+    <NavigationProperty Name="USUARIO" Relationship="Self.FK__DIRECCION__ID_US__5812160E" FromRole="DIRECCION" ToRole="USUARIO" />
+  </EntityType>
+  <EntityType Name="DISTRITO">
+    <Key>
+      <PropertyRef Name="ID_DISTRITO" />
+    </Key>
+    <Property Name="ID_DISTRITO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOMBRE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DIRECCION" Relationship="Self.FK__DIRECCION__ID_DI__5AEE82B9" FromRole="DISTRITO" ToRole="DIRECCION" />
+  </EntityType>
+  <EntityType Name="FACTURA">
+    <Key>
+      <PropertyRef Name="ID_FACTURA" />
+    </Key>
+    <Property Name="ID_FACTURA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ID_USUARIO" Type="Int32" />
+    <Property Name="ESTADO_FACTURA" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="FECHA" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="DETALLE_FACTURA" Relationship="Self.FK__DETALLE_F__ID_FA__4F7CD00D" FromRole="FACTURA" ToRole="DETALLE_FACTURA" />
+    <NavigationProperty Name="USUARIO" Relationship="Self.FK__FACTURA__ID_USUA__4BAC3F29" FromRole="FACTURA" ToRole="USUARIO" />
+  </EntityType>
+  <EntityType Name="INVENTARIO">
+    <Key>
+      <PropertyRef Name="ID_INVENTARIO" />
+    </Key>
+    <Property Name="ID_INVENTARIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DESCRIPCIÓN" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="ID_PAIS" Type="String" MaxLength="3" FixedLength="false" Unicode="false" />
+    <Property Name="ID_SUPERMERCADO" Type="Int32" />
+    <NavigationProperty Name="PAIS" Relationship="Self.FK__INVENTARI__ID_PA__3C69FB99" FromRole="INVENTARIO" ToRole="PAIS" />
+    <NavigationProperty Name="SUPERMERCADO" Relationship="Self.FK__INVENTARI__ID_SU__3D5E1FD2" FromRole="INVENTARIO" ToRole="SUPERMERCADO" />
+    <NavigationProperty Name="PRODUCTO_INVENTARIO" Relationship="Self.FK__PRODUCTO___ID_IN__4316F928" FromRole="INVENTARIO" ToRole="PRODUCTO_INVENTARIO" />
+  </EntityType>
+  <EntityType Name="PAIS">
+    <Key>
+      <PropertyRef Name="ID_PAIS" />
+    </Key>
+    <Property Name="ID_PAIS" Type="String" MaxLength="3" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="NOMBRE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="INVENTARIO" Relationship="Self.FK__INVENTARI__ID_PA__3C69FB99" FromRole="PAIS" ToRole="INVENTARIO" />
+  </EntityType>
+  <EntityType Name="PRODUCTO">
+    <Key>
+      <PropertyRef Name="ID_PRODUCTO" />
+    </Key>
+    <Property Name="ID_PRODUCTO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOMBRE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="DESCRIPCION" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="STOCK" Type="Int32" />
+    <Property Name="TIPO_PRODUCTO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DETALLE_FACTURA" Relationship="Self.FK__DETALLE_F__ID_PR__4E88ABD4" FromRole="PRODUCTO" ToRole="DETALLE_FACTURA" />
+    <NavigationProperty Name="PRODUCTO_INVENTARIO" Relationship="Self.FK__PRODUCTO___ID_PR__4222D4EF" FromRole="PRODUCTO" ToRole="PRODUCTO_INVENTARIO" />
+  </EntityType>
+  <EntityType Name="PRODUCTO_INVENTARIO">
+    <Key>
+      <PropertyRef Name="ID_PRODUCTO_INVENTARIO" />
+    </Key>
+    <Property Name="ID_PRODUCTO_INVENTARIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CANTIDAD" Type="Int32" />
+    <Property Name="ID_PRODUCTO" Type="Int32" />
+    <Property Name="ID_INVENTARIO" Type="Int32" />
+    <NavigationProperty Name="INVENTARIO" Relationship="Self.FK__PRODUCTO___ID_IN__4316F928" FromRole="PRODUCTO_INVENTARIO" ToRole="INVENTARIO" />
+    <NavigationProperty Name="PRODUCTO" Relationship="Self.FK__PRODUCTO___ID_PR__4222D4EF" FromRole="PRODUCTO_INVENTARIO" ToRole="PRODUCTO" />
+  </EntityType>
+  <EntityType Name="PROVINCIA">
+    <Key>
+      <PropertyRef Name="ID_PROVINCIA" />
+    </Key>
+    <Property Name="ID_PROVINCIA" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOMBRE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DIRECCION" Relationship="Self.FK__DIRECCION__ID_PR__59063A47" FromRole="PROVINCIA" ToRole="DIRECCION" />
+  </EntityType>
+  <EntityType Name="SUPERMERCADO">
+    <Key>
+      <PropertyRef Name="ID_SUPERMERCADO" />
+    </Key>
+    <Property Name="ID_SUPERMERCADO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOMBRE" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="INVENTARIO" Relationship="Self.FK__INVENTARI__ID_SU__3D5E1FD2" FromRole="SUPERMERCADO" ToRole="INVENTARIO" />
+  </EntityType>
+  <EntityType Name="TELEFONO">
+    <Key>
+      <PropertyRef Name="ID_TELEFONO" />
+    </Key>
+    <Property Name="ID_TELEFONO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TELEFONO1" Type="Int32" />
+    <Property Name="ID_USUARIO" Type="Int32" />
+    <NavigationProperty Name="USUARIO" Relationship="Self.FK__TELEFONO__ID_USU__47DBAE45" FromRole="TELEFONO" ToRole="USUARIO" />
+  </EntityType>
+  <EntityType Name="USUARIO">
+    <Key>
+      <PropertyRef Name="ID_USUARIO" />
+    </Key>
+    <Property Name="ID_USUARIO" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NOMBRE" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="APELLIDO1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="APELLIDO2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="DIRECCION" Relationship="Self.FK__DIRECCION__ID_US__5812160E" FromRole="USUARIO" ToRole="DIRECCION" />
+    <NavigationProperty Name="FACTURA" Relationship="Self.FK__FACTURA__ID_USUA__4BAC3F29" FromRole="USUARIO" ToRole="FACTURA" />
+    <NavigationProperty Name="TELEFONO" Relationship="Self.FK__TELEFONO__ID_USU__47DBAE45" FromRole="USUARIO" ToRole="TELEFONO" />
+  </EntityType>
+  <Association Name="FK__DIRECCION__ID_CA__59FA5E80">
+    <End Role="CANTON" Type="Self.CANTON" Multiplicity="0..1" />
+    <End Role="DIRECCION" Type="Self.DIRECCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CANTON">
+        <PropertyRef Name="ID_CANTON" />
+      </Principal>
+      <Dependent Role="DIRECCION">
+        <PropertyRef Name="ID_CANTON" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DETALLE_F__ID_FA__4F7CD00D">
+    <End Role="FACTURA" Type="Self.FACTURA" Multiplicity="0..1" />
+    <End Role="DETALLE_FACTURA" Type="Self.DETALLE_FACTURA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="FACTURA">
+        <PropertyRef Name="ID_FACTURA" />
+      </Principal>
+      <Dependent Role="DETALLE_FACTURA">
+        <PropertyRef Name="ID_FACTURA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DETALLE_F__ID_PR__4E88ABD4">
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="0..1" />
+    <End Role="DETALLE_FACTURA" Type="Self.DETALLE_FACTURA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRODUCTO">
+        <PropertyRef Name="ID_PRODUCTO" />
+      </Principal>
+      <Dependent Role="DETALLE_FACTURA">
+        <PropertyRef Name="ID_PRODUCTO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DIRECCION__ID_DI__5AEE82B9">
+    <End Role="DISTRITO" Type="Self.DISTRITO" Multiplicity="0..1" />
+    <End Role="DIRECCION" Type="Self.DIRECCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DISTRITO">
+        <PropertyRef Name="ID_DISTRITO" />
+      </Principal>
+      <Dependent Role="DIRECCION">
+        <PropertyRef Name="ID_DISTRITO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DIRECCION__ID_PR__59063A47">
+    <End Role="PROVINCIA" Type="Self.PROVINCIA" Multiplicity="0..1" />
+    <End Role="DIRECCION" Type="Self.DIRECCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PROVINCIA">
+        <PropertyRef Name="ID_PROVINCIA" />
+      </Principal>
+      <Dependent Role="DIRECCION">
+        <PropertyRef Name="ID_PROVINCIA" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__DIRECCION__ID_US__5812160E">
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+    <End Role="DIRECCION" Type="Self.DIRECCION" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="ID_USUARIO" />
+      </Principal>
+      <Dependent Role="DIRECCION">
+        <PropertyRef Name="ID_USUARIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__FACTURA__ID_USUA__4BAC3F29">
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+    <End Role="FACTURA" Type="Self.FACTURA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="ID_USUARIO" />
+      </Principal>
+      <Dependent Role="FACTURA">
+        <PropertyRef Name="ID_USUARIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__INVENTARI__ID_PA__3C69FB99">
+    <End Role="PAIS" Type="Self.PAIS" Multiplicity="0..1" />
+    <End Role="INVENTARIO" Type="Self.INVENTARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PAIS">
+        <PropertyRef Name="ID_PAIS" />
+      </Principal>
+      <Dependent Role="INVENTARIO">
+        <PropertyRef Name="ID_PAIS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__INVENTARI__ID_SU__3D5E1FD2">
+    <End Role="SUPERMERCADO" Type="Self.SUPERMERCADO" Multiplicity="0..1" />
+    <End Role="INVENTARIO" Type="Self.INVENTARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SUPERMERCADO">
+        <PropertyRef Name="ID_SUPERMERCADO" />
+      </Principal>
+      <Dependent Role="INVENTARIO">
+        <PropertyRef Name="ID_SUPERMERCADO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PRODUCTO___ID_IN__4316F928">
+    <End Role="INVENTARIO" Type="Self.INVENTARIO" Multiplicity="0..1" />
+    <End Role="PRODUCTO_INVENTARIO" Type="Self.PRODUCTO_INVENTARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="INVENTARIO">
+        <PropertyRef Name="ID_INVENTARIO" />
+      </Principal>
+      <Dependent Role="PRODUCTO_INVENTARIO">
+        <PropertyRef Name="ID_INVENTARIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PRODUCTO___ID_PR__4222D4EF">
+    <End Role="PRODUCTO" Type="Self.PRODUCTO" Multiplicity="0..1" />
+    <End Role="PRODUCTO_INVENTARIO" Type="Self.PRODUCTO_INVENTARIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="PRODUCTO">
+        <PropertyRef Name="ID_PRODUCTO" />
+      </Principal>
+      <Dependent Role="PRODUCTO_INVENTARIO">
+        <PropertyRef Name="ID_PRODUCTO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__TELEFONO__ID_USU__47DBAE45">
+    <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="0..1" />
+    <End Role="TELEFONO" Type="Self.TELEFONO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USUARIO">
+        <PropertyRef Name="ID_USUARIO" />
+      </Principal>
+      <Dependent Role="TELEFONO">
+        <PropertyRef Name="ID_USUARIO" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Entities21Fresh" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="CANTON" EntityType="Self.CANTON" />
+    <EntitySet Name="DETALLE_FACTURA" EntityType="Self.DETALLE_FACTURA" />
+    <EntitySet Name="DIRECCION" EntityType="Self.DIRECCION" />
+    <EntitySet Name="DISTRITO" EntityType="Self.DISTRITO" />
+    <EntitySet Name="FACTURA" EntityType="Self.FACTURA" />
+    <EntitySet Name="INVENTARIO" EntityType="Self.INVENTARIO" />
+    <EntitySet Name="PAIS" EntityType="Self.PAIS" />
+    <EntitySet Name="PRODUCTO" EntityType="Self.PRODUCTO" />
+    <EntitySet Name="PRODUCTO_INVENTARIO" EntityType="Self.PRODUCTO_INVENTARIO" />
+    <EntitySet Name="PROVINCIA" EntityType="Self.PROVINCIA" />
+    <EntitySet Name="SUPERMERCADO" EntityType="Self.SUPERMERCADO" />
+    <EntitySet Name="TELEFONO" EntityType="Self.TELEFONO" />
+    <EntitySet Name="USUARIO" EntityType="Self.USUARIO" />
+    <AssociationSet Name="FK__DIRECCION__ID_CA__59FA5E80" Association="Self.FK__DIRECCION__ID_CA__59FA5E80">
+      <End Role="CANTON" EntitySet="CANTON" />
+      <End Role="DIRECCION" EntitySet="DIRECCION" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DETALLE_F__ID_FA__4F7CD00D" Association="Self.FK__DETALLE_F__ID_FA__4F7CD00D">
+      <End Role="FACTURA" EntitySet="FACTURA" />
+      <End Role="DETALLE_FACTURA" EntitySet="DETALLE_FACTURA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DETALLE_F__ID_PR__4E88ABD4" Association="Self.FK__DETALLE_F__ID_PR__4E88ABD4">
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+      <End Role="DETALLE_FACTURA" EntitySet="DETALLE_FACTURA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DIRECCION__ID_DI__5AEE82B9" Association="Self.FK__DIRECCION__ID_DI__5AEE82B9">
+      <End Role="DISTRITO" EntitySet="DISTRITO" />
+      <End Role="DIRECCION" EntitySet="DIRECCION" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DIRECCION__ID_PR__59063A47" Association="Self.FK__DIRECCION__ID_PR__59063A47">
+      <End Role="PROVINCIA" EntitySet="PROVINCIA" />
+      <End Role="DIRECCION" EntitySet="DIRECCION" />
+    </AssociationSet>
+    <AssociationSet Name="FK__DIRECCION__ID_US__5812160E" Association="Self.FK__DIRECCION__ID_US__5812160E">
+      <End Role="USUARIO" EntitySet="USUARIO" />
+      <End Role="DIRECCION" EntitySet="DIRECCION" />
+    </AssociationSet>
+    <AssociationSet Name="FK__FACTURA__ID_USUA__4BAC3F29" Association="Self.FK__FACTURA__ID_USUA__4BAC3F29">
+      <End Role="USUARIO" EntitySet="USUARIO" />
+      <End Role="FACTURA" EntitySet="FACTURA" />
+    </AssociationSet>
+    <AssociationSet Name="FK__INVENTARI__ID_PA__3C69FB99" Association="Self.FK__INVENTARI__ID_PA__3C69FB99">
+      <End Role="PAIS" EntitySet="PAIS" />
+      <End Role="INVENTARIO" EntitySet="INVENTARIO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__INVENTARI__ID_SU__3D5E1FD2" Association="Self.FK__INVENTARI__ID_SU__3D5E1FD2">
+      <End Role="SUPERMERCADO" EntitySet="SUPERMERCADO" />
+      <End Role="INVENTARIO" EntitySet="INVENTARIO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PRODUCTO___ID_IN__4316F928" Association="Self.FK__PRODUCTO___ID_IN__4316F928">
+      <End Role="INVENTARIO" EntitySet="INVENTARIO" />
+      <End Role="PRODUCTO_INVENTARIO" EntitySet="PRODUCTO_INVENTARIO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PRODUCTO___ID_PR__4222D4EF" Association="Self.FK__PRODUCTO___ID_PR__4222D4EF">
+      <End Role="PRODUCTO" EntitySet="PRODUCTO" />
+      <End Role="PRODUCTO_INVENTARIO" EntitySet="PRODUCTO_INVENTARIO" />
+    </AssociationSet>
+    <AssociationSet Name="FK__TELEFONO__ID_USU__47DBAE45" Association="Self.FK__TELEFONO__ID_USU__47DBAE45">
+      <End Role="USUARIO" EntitySet="USUARIO" />
+      <End Role="TELEFONO" EntitySet="TELEFONO" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
